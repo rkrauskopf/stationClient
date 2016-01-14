@@ -24,10 +24,15 @@ var dummyData = [
     }
 ];
 
-export default React.createClass({
+
+class Home extends React.Component {
     render() {
         return (
-           <Stations stationData={dummyData}/>
-        )
+            <div>
+                <Stations stationData={dummyData} />
+            </div>
+        );
     }
-})
+}
+
+export default Home;
