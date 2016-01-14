@@ -1,10 +1,10 @@
 export default {
-    home: {
+    stations: {
         path: '/',
         method: 'get',
-        page: 'station',
-        title: 'Station',
-        handler: require('../components/Home')
+        page: 'stations',
+        title: 'Stations',
+        handler: require('../components/Stations')
     },
     about: {
         path: '/about',
