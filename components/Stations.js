@@ -1,14 +1,31 @@
 import React from 'react';
-import Stations from './StationTable'
+import connectToStores from 'fluxible-addons-react/connectToStores';
+import StationStore from '../stores/StationStore';
+import StationTable from './StationTable'
 
-class Home extends React.Component {
+import stationActions from '../actions/stationActions';
+
+var Stations = React.createClass( {
+
+    contextTypes: {
+        executeAction: React.PropTypes.func.isRequired,
+    },
+
     render() {
         return (
             <div>
-                <Stations/>
+                <StationTable stationData={this.props.stationData}/>
             </div>
         );
     }
-}
+});
 
-export default Home;
+export default connectToStores(
+    Stations,
+    [StationStore],
+    (context, props) => {
+        return {
+            stationData: context.getStore(StationStore).getStations()
+        }
+    }
+);
