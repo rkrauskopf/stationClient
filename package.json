@@ -21,7 +21,7 @@
     "express-state": "^1.2.0",
     "fluxible": "^1.0.0",
     "fluxible-addons-react": "^0.2.0",
-    "fluxible-plugin-fetchr": "^0.3.0",
+    "fluxible-plugin-fetchr": "^0.3.9",
     "fluxible-router": "^0.3.0",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",

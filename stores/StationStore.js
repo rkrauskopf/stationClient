@@ -1,47 +1,34 @@
 import createStore from 'fluxible/addons/createStore';
 
-var dummyData = [
-    {
-        name: 'Station 1',
-        address: '192.168.0.1',
-        port: 8000,
-        settings: {
-            'pump': true,
-            'input 1': 'hello world',
-            'temperature': 90
-        }
-    },
-    {
-        name: 'Station 2',
-        address: '192.168.0.1',
-        port: 8000,
-        settings: {
-            'Beer Pump': true,
-            'input 1': 'hi bob',
-            'siphon yeast': false
-        }
-    }
-];
-
-
-export default createStore ({
+export default createStore({
     storeName: 'StationStore',
 
     initialize() {
-        this.stations = dummyData;
+        this.stations = [];
     },
 
     handlers: {
-        'RECEIVED_STATIONS': 'handleStationRetrieval'
+        'RECEIVED_STATIONS_START': 'handleStationRetrievalStart',
+        'RECEIVED_STATIONS_ERROR': 'handleStationRetrievalError',
+        'RECEIVED_STATIONS_SUCCESS': 'handleStationRetrievalSuccess'
     },
 
-    handleStationRetrieval(payload) {
-        this.stations = dummyData;
+    handleStationRetrievalStart(payload) {
+        this.emitChange();
+    },
+
+    handleStationRetrievalError(error) {
+        console.error(error);
+        this.emitChange();
+    },
+
+    handleStationRetrievalSuccess(stations) {
+        this.stations = JSON.parse(stations);
         this.emitChange();
     },
 
     getStations() {
-      return this.stations;
+        return this.stations;
     },
 
     dehydrate() {

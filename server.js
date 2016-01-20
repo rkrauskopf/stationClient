@@ -17,6 +17,9 @@ import ReactDOM from 'react-dom/server';
 import app from './app';
 import HtmlComponent from './components/Html';
 import { createElementWithContext } from 'fluxible-addons-react';
+
+import stationService from './services/stations';
+
 const env = process.env.NODE_ENV;
 
 const debug = debugLib('stationclient');
@@ -25,6 +28,13 @@ const server = express();
 server.use('/public', express.static(path.join(__dirname, '/build')));
 server.use(compression());
 server.use(bodyParser.json());
+
+//Fluxible plugin registration has to come after the json body parser
+var fetchrPlugin = app.getPlugin('FetchrPlugin');
+
+fetchrPlugin.registerService(stationService);
+
+server.use(fetchrPlugin.getXhrPath(), fetchrPlugin.getMiddleware());
 
 server.use((req, res, next) => {
     const context = app.createContext();
